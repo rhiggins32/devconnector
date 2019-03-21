@@ -1,17 +1,21 @@
 {
   "name": "devconnector",
   "version": "1.0.0",
-  "description": "mongodb test",
+  "description": "Social network for developers",
   "main": "server.js",
   "scripts": {
-    "start": "server.js",
-    "server": "nodemon server.js"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "yarn --cwd client start",
+    "dev": "concurrently 'yarn server' 'yarn client' "
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "create-react-app": "^2.1.8",
     "express": "^4.16.4",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.0",

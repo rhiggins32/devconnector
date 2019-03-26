@@ -7,6 +7,8 @@ import jwt_decode from "jwt-decode";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
 
+import PrivateRoute from './components/common/PrivateRoute';
+
 import store from "./store";
 import Navbar from "./components/layout/Navbar";
 import Dashboard from "./components/dashboard/dashboard"
@@ -49,7 +51,7 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </div>
             <Footer />
           </div>

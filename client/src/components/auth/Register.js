@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
-import TextFieldGroupInput from '../common/TextFieldGroupInput';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class Register extends Component {
   constructor() {
@@ -60,14 +60,14 @@ class Register extends Component {
                 Create your DevConnector account
               </p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroupInput
+                <TextFieldGroup
                   placeholder="Name"
                   name="name"
                   value={this.state.name}
                   onChange={this.onChange}
                   error={errors.name}
                 />
-                <TextFieldGroupInput
+                <TextFieldGroup
                   placeholder="Email"
                   name="email"
                   type="email"
@@ -76,7 +76,7 @@ class Register extends Component {
                   error={errors.email}
                   info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
                 />
-                <TextFieldGroupInput
+                <TextFieldGroup
                   placeholder="Password"
                   name="password"
                   type="password"
@@ -84,7 +84,7 @@ class Register extends Component {
                   onChange={this.onChange}
                   error={errors.password}
                 />
-                <TextFieldGroupInput 
+                <TextFieldGroup 
                   placeholder="Confirm Password"
                   name="password2"
                   type="password"

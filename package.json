@@ -7,7 +7,8 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "yarn --cwd client start",
-    "dev": "concurrently 'yarn server' 'yarn client' "
+    "dev": "concurrently 'yarn server' 'yarn client' ",
+    "heroku-postbuild": "YARN_PRODUCTION=false cd client && yarn install && yarn run build"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,9 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "validator": "^10.11.0"
+  },
+  "engines": {
+    "yarn": "1.15.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"

@@ -140,45 +140,39 @@ router.post(
   }
 );
 
-//@route DELETE api/posts/comment/:id/:comment_id
-//@desc Delete comment by Id
-//@access Private
+// @route   DELETE api/posts/comment/:id/:comment_id
+// @desc    Remove comment from post
+// @access  Private
 router.delete(
-  '/:post_id/comment/:comment_id',
+  '/comment/:id/:comment_id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Post.findById(req.params.post_id)
+    Post.findById(req.params.id)
       .then(post => {
-        // Post not found
-        if (!post) {
-          return res.status(404).json({ postNotFound: 'Post not found' });
-        }
-        // Get the comment to delete
-        const commentToDelete = post.comments.find(
-          comment => comment._id == req.params.comment_id
-        );
-        // Return 404 if not exist
-        if (!commentToDelete) {
+        // Check to see if comment exists
+        if (
+          post.comments.filter(
+            comment => comment._id.toString() === req.params.comment_id
+          ).length === 0
+        ) {
           return res
             .status(404)
-            .json({ commentNotExits: 'Comment does not exist' });
+            .json({ commentnotexists: 'Comment does not exist' });
         }
-        // Check if the user is the owner of the post or the comment
-        if (post.user != req.user.id) {
-          if (commentToDelete.user != req.user.id) {
-            return res
-              .status(401)
-              .json({ canNotDeleteComment: "You can't delete this comment" });
-          }
-        }
-        // Update the comments array with MongoDB's $pull operator
-        post
-          .update({ $pull: { comments: { _id: req.params.comment_id } } })
-          .then(() => res.json({ deletedComment: 'Comment deleted' }))
-          .catch(err => res.status(400).send(err));
+
+        // Get remove index
+        const removeIndex = post.comments
+          .map(item => item._id.toString())
+          .indexOf(req.params.comment_id);
+
+        // Splice comment out of array
+        post.comments.splice(removeIndex, 1);
+
+        post.save().then(post => res.json(post));
       })
-      .catch(err => res.status(400).json(err));
+      .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
   }
 );
+
 
 module.exports = router;
